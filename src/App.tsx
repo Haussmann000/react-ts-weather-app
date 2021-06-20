@@ -22,10 +22,12 @@ function App() {
     conditionText: "",
     icon: ""
   });
+  const API_KEY = process.env.REACT_APP_TEST_API_KEY;
+  const API_URL = `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}&aqi=no`
 
   const getWeather = (e :React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    fetch(`https://api.weatherapi.com/v1/current.json?key=71e1fae33db5403d89a54931212006&q=${city}&aqi=no`)
+    fetch(API_URL)
     .then(res => res.json())
     .then(data => {
       setResults({
