@@ -1,37 +1,34 @@
 // Results.tsx
 
-// 取得結果の型定義
-// App.tsxからコピー
-type ResultsStateType = {
-  results: {
-    country: string;
-    cityName: string;
-    temperature: string;
-    conditionText: string;
-    icon: string  ;
-  }
+// 取得結果の型定義をApp.tsxからimportしてResultPropsTypeに代入
+import { ResultsStateType } from "../App";
+type ResultsPropsType = {
+  results: ResultsStateType;
 }
 
-const Results = (props: ResultsStateType) => {
+const Results = ({ results }: ResultsPropsType) => {
+  const {cityName, country, temperature, conditionText, icon} = results;
   return(
-    <div>
-      {props.results.cityName && <div>{props.results.cityName}</div>}
-      {props.results.country && <div>{props.results.country}</div>}
-      {props.results.temperature && 
-        <div>{props.results.temperature}</div>}
-      {props.results.temperature && 
-        <div>{props.results.temperature}
+    // Reactでは純粋なdivは<>で代用できる
+    // <div>
+    <>
+      {cityName && <div>{cityName}</div>}
+      {country && <div>{country}</div>}
+      {temperature && 
+        <div>{temperature}</div>}
+      {temperature && 
+        <div>{temperature}
           <span>C°</span>
         </div>
         }
-      {props.results.conditionText && 
+      {conditionText && 
         <div>
-          <img src={props.results.icon} alt="weatherIcon" />
+          <img src={icon} alt="weatherIcon" />
           <span>
-            {props.results.conditionText}
+            {conditionText}
           </span>
         </div>}
-    </div>
+    </>
   );
 }
 
