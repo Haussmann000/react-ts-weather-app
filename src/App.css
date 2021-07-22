@@ -12,19 +12,19 @@ body {
     font-size: 1.6rem;
     font-display: swap;
     color: #333;
+    
 }
 
 /* App.js */
 .wrapper {
    margin: 0;
    padding: 0;
-   width: 100vw;
-   height: 100vh;
-   background-color: aqua; 
+   width: 50vw;
+   height: 50vh;
+   background-color: rgba(50,50,50,.5); 
    display: flex;
    justify-content: center;
    align-items: center; 
-   /* background: url("./background-image.jpg") center center no-repeat; */
    background-size: cover;
 }
 
@@ -46,6 +46,11 @@ body {
 h1 {
     font-weight: 400;
     margin: 0px 0 50px;
+    flex-basis: 200px;
+}
+
+.titleWrapper {
+    display: flex;
 }
 
 /* Form.js */
@@ -149,13 +154,12 @@ button:disabled {
 #background {
     height: 100vh;
     display: flex;
-    /* width: 100vw; */
-    /* z-index: 10; */
-    /* position: relative; */
-    /* background: #000; */
-    background-size: cover;
+    justify-content: center;
+    align-items: center;
+    background-size: contain;
     transition: all 1.5s linear 1.5s;
     animation: bgFade 5s linear;
+    background: url("./background-image.jpg") center center no-repeat;
 }
 
 
