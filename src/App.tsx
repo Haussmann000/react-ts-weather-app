@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; //useStateをインポート
+import React, { useState, useEffect, useRef } from 'react'; //useStateをインポート
 import Title from './components/Title';
 import Form from './components/Form';
 import Form2 from './components/Form2';
@@ -7,8 +7,8 @@ import Loading from './components/Loading';
 import Notice from './components/Notice';
 import { createClient } from 'pexels';
 import './App.css';
-import type {ErrorResponse} from "pexels/dist/types"
-import type {PhotosWithTotalResults} from "pexels/dist/types"
+// import Background from './components/Background';
+
 
 // 取得結果の型定義
 export type ResultsStateType = {
@@ -23,35 +23,8 @@ function App() {
   const [loading, setLoading] = useState<boolean>(false); //useStateで値とそれを更新する関数を返す
   const [isError, setError] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
-  const [url, setUrl] = useState<PhotosWithTotalResults | ErrorResponse>({
-    url: "",
-    page: 0,
-    per_page: 0,
-    next_page: 0,
-    photos: [
-    {
-      id: 0,
-      width: 0,
-      height: 0,
-      url: "",
-      photographer: "",
-      photographer_url: "",
-      photographer_id: "",
-      liked: false,
-      src: {
-        original: "",
-        large2x: "",
-        large: "",
-        medium: "",
-        small: "",
-        portrait: "",
-        landscape: "",
-        tiny: ""
-      }
-    }
-  ],
-  error: ""
-  });
+  const [url, setUrl] = useState<string>("");
+  const [count, setCount] = useState<number>(0);
   const [city, setCity] = useState<string>(""); //空文字列を引数としたuseStateの戻り値を分割代入
   const [results, setResults] = useState<ResultsStateType>({
     country: "",
@@ -65,7 +38,8 @@ function App() {
   const API_BACK_KEY =  process.env.REACT_APP_BACK_API_KEY;
   const client = createClient(`${API_BACK_KEY}`);
   const query = 'weather';
-  
+  let apiResult :any;
+  let imageNumber = 10;
 
   const getWeather = (e :React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -90,29 +64,75 @@ function App() {
     }
 
     
-    const toggleError = (bool: boolean) => {
+
+    
+  const toggleError = (bool: boolean) => {
       setError(bool)
       setLoading(false)
   }
-
-
-  function changeImage() {
-    client.photos.search({query, per_page: 1})
-    .then((res: PhotosWithTotalResults | ErrorResponse) => 
-      // console.log(res)
-    // setUrl(Object.values(res)[2][0].src.large)
-    setUrl(res)
-    ).catch(e => {
-      toggleError(true);
+  
+  
+  
+  const fetchImage = (imageNumber = 10) => {
+    client.photos.search({query, per_page: imageNumber})
+    .then((res :any) => {
+      apiResult = res;
     })
-    const image = document.querySelector<HTMLElement>('#wrapper');
-    if(image) image.style.background = `url("${url}") center center no-repeat`;
-  };
-  changeImage();
-
+    .catch(e => {
+      console.error(e);
+    })
+    .finally(function(){
+      console.log(apiResult);
+    })
+  }
+  
+  
+  
+  const changeImage = (result :any) => {
+    let bg = document.querySelector<HTMLElement>('#wrapper');
+    const increment = () => setCount((prevCount) => prevCount + 1)
+    if(refImage.current < imageNumber - 1) {
+      increment();
+      console.log(`${refImage.current} < ${imageNumber}`);
+    } else {
+      refImage.current = 0;
+      setCount(0);
+    }
+    try {
+      setUrl(result.photos[refImage.current].src.large2x);
+      console.log(`fetchUrl: ${result.photos[refImage.current].src.large2x}`);
+    }catch (e){
+      console.error(e);
+    }
+    
+    console.log(`setUrl: ${url}`)
+    if(bg !== null) {
+      console.log(`changeurl: ${url}`)
+      bg.style.background = `url(${url}) no-repeat`;
+      console.log("image changed")
+    }
+    
+  }
+  
+  const refImage = useRef(count);
+  useEffect(() => {
+    refImage.current = count;
+    console.log(refImage.current)
+  },[count]);
+  
+  useEffect(() => {
+    fetchImage(imageNumber);
+    const interval = setInterval(() => {
+      changeImage(apiResult);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+  
   return (
+    <>
     <div className="wrapper" id="wrapper">
-      <div className="body">
+      {/* <div className="body"> */}
+        {/* <Background /> */}
         <Title />
         <Form setCity={setCity} getWeather={getWeather} city={city}/>
         <Form2 city={city} setMessage={setMessage} getWeather={getWeather}/>
@@ -121,12 +141,13 @@ function App() {
         {loading ? 
             <Loading /> :  
             (isError ?
-              <Notice /> :
+              <Notice message={message} setMessage={setMessage}/> :
               <Results results={results} />
-            )
-        }
-      </div>
+              )
+            }
+      {/* </div> */}
     </div>
+    </>
   );
 }
 

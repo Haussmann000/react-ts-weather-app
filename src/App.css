@@ -4,19 +4,20 @@
 html {
     font-size: 62.5%;
 }
-
 body {
+    margin: 0;
+    padding: 0;
     font-family: 'Raleway','Noto Sans JP', sans-serif;
     font-weight: 400;
     font-size: 1.6rem;
     font-display: swap;
     color: #333;
-    margin: 0;
-    padding: 0;
 }
 
 /* App.js */
 .wrapper {
+   margin: 0;
+   padding: 0;
    width: 100vw;
    height: 100vh;
    background-color: aqua; 
@@ -25,7 +26,6 @@ body {
    align-items: center; 
    /* background: url("./background-image.jpg") center center no-repeat; */
    background-size: cover;
-   
 }
 
 .container {
@@ -46,8 +46,6 @@ body {
 h1 {
     font-weight: 400;
     margin: 0px 0 50px;
-    position: absolute;
-    top: 0;
 }
 
 /* Form.js */
@@ -84,6 +82,12 @@ button:hover {
 
 *:focus {
     outline: none;
+}
+
+button:disabled {
+    pointer-events: none;
+    background-color: #aaa;
+    color: #555;
 }
 
 /* Results.js */
@@ -136,8 +140,24 @@ button:hover {
 
 /* background */
 
-#image {
-    background: url("");
+@keyframes bgFade {
+    0% { opacity: 50%;}
+    50% { opacity: 65%;}
+    100% { opacity: 80%;}
 }
+
+#background {
+    height: 100vh;
+    display: flex;
+    /* width: 100vw; */
+    /* z-index: 10; */
+    /* position: relative; */
+    /* background: #000; */
+    background-size: cover;
+    transition: all 1.5s linear 1.5s;
+    animation: bgFade 5s linear;
+}
+
+
 
 
