@@ -23,17 +23,14 @@ export default function Background() {
       console.error(e);
     })
     .finally(function(){
-      console.log(jsonRef.current);
     })
   }
   
   
   const changeImage = (result :any) => {
-    let bg = document.querySelector<HTMLElement>('#background');
     const increment = () => setCount((prevCount) => prevCount + 1)
     if(refImageCounter.current < imageNumber) {
       increment();
-      console.log(`${refImageCounter.current} < ${imageNumber}`);
     } else {
       refImageCounter.current = 0;
       setCount(0);
@@ -44,9 +41,15 @@ export default function Background() {
       console.error(e);
     }
     
+    let bg = document.querySelector<HTMLElement>('#background');
     if(bg !== null) {
-      bg.style.background = `url(${refImageUrl.current}) no-repeat`;
+      bg.classList.add("fadeIn");
+      // bg.style.background = `url(${refImageUrl.current}) no-repeat`;
+      refStyle.current = {background: `url(${refImageUrl.current}) no-repeat`}
+      bg.style.backgroundSize = 'cover';
+      // bg.classList.remove("fadeIn");
     }
+
     
   }
 
@@ -56,7 +59,6 @@ export default function Background() {
   
   useEffect(() => {
     refImageCounter.current = count;
-    console.log(refImageCounter.current)
   },[count]);
   
   useEffect(() => {
@@ -67,12 +69,16 @@ export default function Background() {
   useEffect(() => {
     const interval = setInterval(() => {
       changeImage(jsonRef.current);
-    }, 8000);
+    }, 3000);
     return () => clearInterval(interval);
   }, []);
 
+  const refStyle = useRef({
+      background: ""
+  });
+
   return(
-    <div id="background">
+    <div id="background" style={refStyle.current} className="fadeIn">
       <App />
     </div>
   )
