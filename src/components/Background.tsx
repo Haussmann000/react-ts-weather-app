@@ -5,6 +5,7 @@ const API_BACK_KEY =  process.env.REACT_APP_BACK_API_KEY;
 const client = createClient(`${API_BACK_KEY}`);
 const query = 'weather';
 let imageNumber = 10;
+const intervalTime = 8000;
 
 export default function Background() {
   const jsonRef = useRef<object>({});
@@ -44,10 +45,8 @@ export default function Background() {
     let bg = document.querySelector<HTMLElement>('#background');
     if(bg !== null) {
       bg.classList.add("fadeIn");
-      // bg.style.background = `url(${refImageUrl.current}) no-repeat`;
       refStyle.current = {background: `url(${refImageUrl.current}) no-repeat`}
       bg.style.backgroundSize = 'cover';
-      // bg.classList.remove("fadeIn");
     }
 
     
@@ -69,7 +68,7 @@ export default function Background() {
   useEffect(() => {
     const interval = setInterval(() => {
       changeImage(jsonRef.current);
-    }, 3000);
+    }, intervalTime);
     return () => clearInterval(interval);
   }, []);
 

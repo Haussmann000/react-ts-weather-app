@@ -1,24 +1,25 @@
-// Form.tsx
-
-import React from "react";
+import React from 'react';
 
 
 // 型定義
 type FormPropsType = {
   city: string;
-  setCity :React.Dispatch<React.SetStateAction<string>>;
+  setMessage :React.Dispatch<React.SetStateAction<string>>;
   getWeather: (e: React.FormEvent<HTMLFormElement>) => void;
+  handleChange: Function;
+  isDisabled: boolean;
 }
 
+const Form2 = ({city, setMessage, getWeather, handleChange, isDisabled} :FormPropsType) => {
+    return (
+        <div>
+        <p>{setMessage}</p>
+        <form onSubmit={getWeather}>
+          <input type="text" name="city" value={city} onChange={e => handleChange(e.target.value)} placeholder="都市名(英語)"/>
+          <button type="submit" disabled={isDisabled} >Get Weather</button>
+        </form>
+        </div>
+    );
+}
 
-const Form = ({city, setCity, getWeather} : FormPropsType) => {
-  return (
-    <form onSubmit={getWeather}>
-      <input type="text" name="city" placeholder="都市名" onChange={e=> setCity(e.target.value)} value={city} />
-      <button type="submit">Get Weather</button>
-    </form>
-  );
-  
-};
-
-export default Form;
+export default Form2;
