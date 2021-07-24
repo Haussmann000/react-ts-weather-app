@@ -4,7 +4,16 @@ import Form from './components/Form';
 import Results from './components/Results';
 import Loading from './components/Loading';
 import Notice from './components/Notice';
+import Background from './components/Background';
 import './App.css';
+// import { createClient } from 'pexels';
+
+// const API_BACK_KEY =  process.env.REACT_APP_BACK_API_KEY;
+// const client = createClient(`${API_BACK_KEY}`);
+// const query = 'weather';
+// let imageNumber = 10;
+// const intervalTime = 8000;
+// let style : {background: string};
 
 
 // 取得結果の型定義
@@ -25,16 +34,26 @@ const initialResult = {
 }
 
 function App() {
-  const [loading, setLoading] = useState<boolean>(false); //useStateで値とそれを更新する関数を返す
+  const [city, setCity] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false); 
   const [isError, setError] = useState<boolean>(false);
-  const [message, setMessage] = useState<string>("");
   const [isDisabled, setDisabled] = useState<boolean>(true);
-  const [city, setCity] = useState<string>(""); //空文字列を引数としたuseStateの戻り値を分割代入
+  const [message, setMessage] = useState<string>("");
   const [results, setResults] = useState<ResultsStateType>(initialResult);
   const API_KEY = process.env.REACT_APP_TEST_API_KEY;
   const API_URL = `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}&aqi=no`
   
+  const jsonRef = useRef<object>({});
+  const [count, setCount] = useState<number>(1);
+  const [url, setUrl] = useState<string>("");
+  const refImageUrl = useRef<string>(url);
+  const refImageCounter = useRef<number>(count);
 
+
+  const toggleError = (bool: boolean) => {
+    setError(bool)
+    setLoading(false)
+}
   const getWeather = (e :React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
@@ -48,7 +67,6 @@ function App() {
         conditionText: data.current.condition.text,
         icon: data.current.condition.icon
       })
-      setCity(""); //検索した後、次に検索するときのためにフォームを初期化
       toggleError(false)
     })
     .catch(e => {
@@ -59,11 +77,64 @@ function App() {
       setCity("") //検索した後、次に検索するときのためにフォームを初期化
       setDisabled(true);
     }
+
+  // const fetchImage = (imageNumber = 10) => {
+  //   client.photos.search({query, per_page: imageNumber})
+  //   .then((res :any) => {
+  //     jsonRef.current = res;
+  //     refImageUrl.current = res.photos[0].src.large2x;
+  //   })
+  //   .catch(e => {
+  //     console.error(e);
+  //   })
+  // }
+
+  // const increment = () => setCount((prevCount) => prevCount + 1)
+  // const changeImage = (result :any) => {
+  //   if(refImageCounter.current < imageNumber) {
+  //     increment();
+  //   } else {
+  //     refImageCounter.current = 0;
+  //     setCount(0);
+  //   }
+  //   try {
+  //     setUrl(result.photos[refImageCounter.current].src.large2x);
+  //   }catch (e){
+  //     console.error(e);
+  //   }
     
-    const toggleError = (bool: boolean) => {
-      setError(bool)
-      setLoading(false)
-  }
+  //   let bg = document.querySelector<HTMLElement>('#background');
+  //   if(bg !== null) {
+  //     bg.classList.add("fadeIn");
+  //     refStyle.current = {background: `url(${refImageUrl.current}) no-repeat`}
+  //     style = refStyle.current;
+  //     bg.style.backgroundSize = 'cover';
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   fetchImage(imageNumber);
+  // }, []);
+  
+  // useEffect(() => {
+  //   refImageCounter.current = count;
+  // },[count]);
+  
+  // useEffect(() => {
+  //   refImageUrl.current = url;
+  // }, [url]);
+  
+  
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     changeImage(jsonRef.current);
+  //   }, intervalTime);
+  //   return () => clearInterval(interval);
+  // }, []);
+
+  // const refStyle = useRef({
+  //     background: ""
+  // });
 
 
   function handleChange(value: string) {
@@ -72,16 +143,26 @@ function App() {
   }
 
   function contentValidation(value :string){
-      if (!value){
-        setDisabled(true);
-        return '';
-      } else {
+    const regex = new RegExp(/[^\x00-\x7E]+/g);
+    if (!value){
+      setDisabled(true);
+      return '';
+    } else {
+      if(regex.test(value)) {
+          console.log(regex.test(value))
+          setDisabled(true);
+          toggleError(true);
+          return '半角英数字で入力してください';
+        }
         setDisabled(false);
         return '';
       }
   }
   
   return (
+    <>
+    {/* <Background refStyle={style}/> */}
+    <Background />
     <div className="wrapper" id="wrapper">
       <Title />
         {loading ? 
@@ -95,6 +176,7 @@ function App() {
         <Form city={city} setMessage={setMessage} getWeather={getWeather} handleChange={handleChange} isDisabled={isDisabled}/>
       </div>
     </div>
+    </>
   );
 }
 

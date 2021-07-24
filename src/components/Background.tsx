@@ -1,12 +1,16 @@
 import  { useState, useEffect, useRef } from 'react'; //useStateをインポート
 import { createClient } from 'pexels';
-import App from '../App';
 const API_BACK_KEY =  process.env.REACT_APP_BACK_API_KEY;
 const client = createClient(`${API_BACK_KEY}`);
 const query = 'weather';
 let imageNumber = 10;
 const intervalTime = 8000;
 
+// export type BgPrppsType = {
+//   refStyle:  {background: string};
+// }
+
+// export default function Background(refStyle : BgPrppsType) {
 export default function Background() {
   const jsonRef = useRef<object>({});
   const [count, setCount] = useState<number>(1);
@@ -23,13 +27,10 @@ export default function Background() {
     .catch(e => {
       console.error(e);
     })
-    .finally(function(){
-    })
   }
-  
-  
+
+  const increment = () => setCount((prevCount) => prevCount + 1)
   const changeImage = (result :any) => {
-    const increment = () => setCount((prevCount) => prevCount + 1)
     if(refImageCounter.current < imageNumber) {
       increment();
     } else {
@@ -46,10 +47,9 @@ export default function Background() {
     if(bg !== null) {
       bg.classList.add("fadeIn");
       refStyle.current = {background: `url(${refImageUrl.current}) no-repeat`}
+      // style = refStyle.current;
       bg.style.backgroundSize = 'cover';
     }
-
-    
   }
 
   useEffect(() => {
@@ -76,9 +76,9 @@ export default function Background() {
       background: ""
   });
 
+
   return(
-    <div id="background" style={refStyle.current} className="fadeIn">
-      <App />
-    </div>
+    // <div id="background"  className="fadeIn"></div>
+    <div id="background" style={refStyle.current} className="fadeIn"></div>
   )
 }

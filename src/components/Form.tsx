@@ -10,7 +10,7 @@ type FormPropsType = {
   isDisabled: boolean;
 }
 
-const Form2 = ({city, setMessage, getWeather, handleChange, isDisabled} :FormPropsType) => {
+const Form = ({city, setMessage, getWeather, handleChange, isDisabled} :FormPropsType) => {
     return (
         <div>
         <p>{setMessage}</p>
@@ -22,4 +22,4 @@ const Form2 = ({city, setMessage, getWeather, handleChange, isDisabled} :FormPro
     );
 }
 
-export default Form2;
+export default Form;
