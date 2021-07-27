@@ -10,13 +10,19 @@ type FormPropsType = {
   isDisabled: boolean;
 }
 
+const buttonTouch = () => {
+  const btn = document.querySelector<HTMLElement>('button');
+  btn?.classList.add("hover");
+  console.log("buttn touched")
+}
+
 const Form = ({city, setMessage, getWeather, handleChange, isDisabled} :FormPropsType) => {
     return (
         <div>
         <p>{setMessage}</p>
-        <form onSubmit={getWeather}>
+        <form onSubmit={getWeather} >
           <input type="text" name="city" value={city} onChange={e => handleChange(e.target.value)} placeholder="都市名(英語)"/>
-          <button type="submit" disabled={isDisabled} >Get Weather</button>
+          <button type="submit" disabled={isDisabled} onTouchStart={buttonTouch}>Get Weather</button>
         </form>
         </div>
     );

@@ -5,7 +5,10 @@ import Results from './components/Results';
 import Loading from './components/Loading';
 import Notice from './components/Notice';
 import Background from './components/Background';
+import Header from './components/Header';
+import 'tailwindcss/tailwind.css'
 import './App.css';
+
 // import { createClient } from 'pexels';
 
 // const API_BACK_KEY =  process.env.REACT_APP_BACK_API_KEY;
@@ -161,7 +164,7 @@ function App() {
   
   return (
     <>
-    {/* <Background refStyle={style}/> */}
+    {/* <Header /> */}
     <Background />
     <div className="wrapper" id="wrapper">
       <Title />
