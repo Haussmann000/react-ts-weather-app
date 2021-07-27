@@ -268,7 +268,7 @@ button:disabled {
 
 @media only screen and (max-width: 414px) {
     .wrapper{
-        top: 15%;
+        top: 5%;
         width: var(--wrapper-mobile-width);
         left: calc((var(--fullWidth) - (var(--wrapper-mobile-width) + var(--padding) * 2)) / 2);
         justify-content: space-evenly;
@@ -288,8 +288,12 @@ button:disabled {
         padding: 0;
         height: 50px;
     }
+
     .resultArea {
         width: 80%;
+    }
+    .cityName {
+        font-size: 2.5rem;
     }
     input[type="text"] {
         font-size: 16px;
