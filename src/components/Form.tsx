@@ -12,7 +12,7 @@ type FormPropsType = {
 
 const buttonTouch = () => {
   const btn = document.querySelector<HTMLElement>('button');
-  btn?.classList.add("hover");
+  btn?.classList.add("touched");
   console.log("buttn touched")
 }
 
