@@ -1,4 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react'; //useStateをインポート
+import React, { useState, 
+                useEffect, 
+                useRef, 
+                useReducer
+               } from 'react'; //useStateをインポート
 import Title from './components/Title';
 import Form from './components/Form';
 import Results from './components/Results';
@@ -144,6 +148,7 @@ function App() {
     setMessage(contentValidation(value))
     setCity(value);
   }
+
 
   function contentValidation(value :string){
     const regex = new RegExp(/[^\x00-\x7E]+/g);

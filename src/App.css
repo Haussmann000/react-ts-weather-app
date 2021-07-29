@@ -125,7 +125,7 @@ button::before {
     margin: 0;
     padding: 0;
     transition: height 0.2s cubic-bezier(0.65, 0, 0.35, 1) 0.2s;
-    transform: translate(0, -50%);
+    transform: translate(0, -100%);
     height: 0;
 }
 button:hover:before {
@@ -133,12 +133,13 @@ button:hover:before {
     padding: 0;
     display: block;
     position: absolute;
-    top: 50%;
+    top: 103%;
     left: 0;
     width: 100%;
     height: 75%;
+    animation-direction: reverse;
     content: "";
-    border-left: solid 2px #fff;
+    border-left: solid 2px rgba(255, 255, 255, 1);
     padding: 5px;
     z-index: 1;
     transition-delay: 0s;
@@ -151,7 +152,7 @@ button:after {
     transition: width 0.6s cubic-bezier(.61,1.09,.83,.67) 1.2s;
     transform: translate(0, 0);
     height: 0;
-    width: 0;
+    /* width: 0; */
 }
 
 button:hover:after {
@@ -164,13 +165,26 @@ button:hover:after {
     width: 100%;
     height: 100%;
     content: "";
-    border-top: solid 2px #fff;
-    border-bottom: solid 2px #fff;
-    border-right: solid 2px #fff;
+    border-top: solid 2px rgba(255, 255, 255, 1);
+    border-bottom: solid 2px rgba(255, 255, 255, 1);
     z-index: 1;
     transition-delay: 0s;
 }
 
+.touched.end:after {
+    content: "";
+    height: 0;
+    width: 0;
+    transition: width 0.6s cubic-bezier(.61,1.09,.83,.67) 1.2s;
+    transition-delay: 0s;
+    border-right: solid 2px rgba(255, 255, 255, 1);
+}
+
+.end:after:hover {
+    height: 52%;
+    width: 100%;
+    height: 100%;
+}
 
 /* mobile */
 .touched {
@@ -186,7 +200,6 @@ button:hover:after {
     left: 0;
     width: 100%;
     height: 100%;
-    border-right: solid 2px #fff;
     z-index: 1;
     transition-delay: 0s;
 }
@@ -271,7 +284,7 @@ button:disabled {
 /* iPhone6/7/8/Plus */
 @media only screen and (max-width: 414px) {
     .wrapper{
-        top: 5%;
+        top: 10%;
         width: var(--wrapper-mobile-width);
         left: calc((var(--fullWidth) - (var(--wrapper-mobile-width) + var(--padding) * 2)) / 2);
         justify-content: space-evenly;
