@@ -6,7 +6,7 @@ import Loading from './components/Loading';
 import Notice from './components/Notice';
 import Background from './components/Background';
 import Header from './components/Header';
-// import 'tailwindcss/tailwind.css'
+import 'tailwindcss/tailwind.css'
 import './App.css';
 
 // import { createClient } from 'pexels';
@@ -164,8 +164,8 @@ function App() {
   
   return (
     <>
-    {/* <Header /> */}
-    <Background />
+    <Header />
+    {/* <Background /> */}
     <div className="wrapper" id="wrapper">
       <Title />
         {loading ? 

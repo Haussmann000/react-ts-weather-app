@@ -20,7 +20,7 @@ const Form = ({city, setMessage, getWeather, handleChange, isDisabled} :FormProp
     return (
         <div>
         <p>{setMessage}</p>
-        <form onSubmit={getWeather} >
+        <form onSubmit={getWeather} className="weatherForm">
           <input type="text" name="city" value={city} onChange={e => handleChange(e.target.value)} placeholder="都市名(英語)"/>
           <button type="submit" disabled={isDisabled} onTouchStart={buttonTouch}>Get Weather</button>
         </form>
