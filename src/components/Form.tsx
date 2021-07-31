@@ -17,7 +17,7 @@ const buttonTouch = () => {
   setTimeout(e => {
     btn?.classList.add("end")
   }
-  , 300);
+  , 400);
 }
 const buttonLeave = () => {
   const btn = document.querySelector<HTMLElement>('button');
