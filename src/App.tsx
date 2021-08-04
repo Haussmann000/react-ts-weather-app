@@ -51,7 +51,6 @@ function App() {
   const [message, setMessage] = useState<string>("");
   const [results, setResults] = useState<ResultsStateType>(initialResult);
   const API_KEY = process.env.REACT_APP_TEST_API_KEY;
-  console.log(process.env)
   const API_URL = `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}&aqi=no`
   
   const jsonRef = useRef<object>({});
