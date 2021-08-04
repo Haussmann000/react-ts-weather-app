@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
 
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
 :root {
     --wrapper-width: 700px;
     --wrapper-mobile-width: 270px;
@@ -68,7 +72,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: url("./background-image.jpg") center center no-repeat;
+    background: url("../../background-image.jpg") center center no-repeat;
     background-size: cover;
 }
 

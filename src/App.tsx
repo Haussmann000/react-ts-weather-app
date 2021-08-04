@@ -13,7 +13,8 @@ import Header from './components/Header';
 import SideBar from './components/SideBar';
 import 'tailwindcss/tailwind.css'
 // import './App.css';
-import './tailwind.css';
+import './styles/tailwind/tailwind.css';
+import './styles/tailwind/tailwindApp.css';
 
 // import { createClient } from 'pexels';
 
