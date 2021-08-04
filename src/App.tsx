@@ -11,7 +11,7 @@ import Notice from './components/Notice';
 import Background from './components/Background';
 import Header from './components/Header';
 import SideBar from './components/SideBar';
-// import 'tailwind/tailwind.css'
+import 'tailwindcss/tailwind.css'
 // import './App.css';
 import './tailwind.css';
 
