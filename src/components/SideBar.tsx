@@ -11,8 +11,8 @@ type FormPropsType = {
 const SideBar = ({city, setMessage, getWeather, handleChange, isDisabled} :FormPropsType) => {
 
     return(
-        <div>
-            <button type="submit">a</button>
+        <div className="flex">
+            <button type="submit" disabled={isDisabled} onClick={e => handleChange({city})}>{city}</button>
         </div>
       )};
     

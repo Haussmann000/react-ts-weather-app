@@ -169,6 +169,13 @@ function App() {
         return '';
       }
   }
+
+  const array = {
+    1: "Tokyo",
+    2: "London",
+    3: "New York"
+  }
+  console.log(Object.keys(array))
   
   return (
     <>
@@ -186,7 +193,10 @@ function App() {
       <div className="container">
         <Form city={city} setMessage={setMessage} getWeather={getWeather} handleChange={handleChange} isDisabled={isDisabled}/>
       </div>
-        <SideBar city={city} setMessage={setMessage} getWeather={getWeather} handleChange={handleChange} isDisabled={isDisabled}/>
+      {Object.keys(array).forEach(element => {
+        <SideBar city={element} setMessage={setMessage} getWeather={getWeather} handleChange={handleChange} isDisabled={isDisabled}/>
+      })
+      }
     </div>
     </>
   );
