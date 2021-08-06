@@ -43,6 +43,13 @@ const initialResult = {
   icon: ""  
 }
 
+const cities = [
+  "Tokyo",
+  "London",
+  "New York"
+]
+
+
 function App() {
   const [city, setCity] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false); 
@@ -147,9 +154,22 @@ function App() {
   // });
 
 
-  function handleChange(value: string) {
-    setMessage(contentValidation(value))
-    setCity(value);
+  class Handler {
+    handleChange(value: string) :string
+    handleChange(value: object) :object
+
+
+    handleChange(value: any) :any{
+      if(typeof value === 'string') {
+        setMessage(contentValidation(value))
+        setCity(value);
+        console.log("string")
+      }
+
+      if(typeof value === 'object') {
+        console.log("object")
+      }
+    }
   }
 
 
@@ -170,12 +190,6 @@ function App() {
       }
   }
 
-  const array = {
-    1: "Tokyo",
-    2: "London",
-    3: "New York"
-  }
-  console.log(Object.keys(array))
   
   return (
     <>
@@ -191,12 +205,9 @@ function App() {
               )
             }
       <div className="container">
-        <Form city={city} setMessage={setMessage} getWeather={getWeather} handleChange={handleChange} isDisabled={isDisabled}/>
+        <Form city={city} setMessage={setMessage} getWeather={getWeather} handleChange={Handler} isDisabled={isDisabled}/>
       </div>
-      {Object.keys(array).forEach(element => {
-        <SideBar city={element} setMessage={setMessage} getWeather={getWeather} handleChange={handleChange} isDisabled={isDisabled}/>
-      })
-      }
+        <SideBar cities={cities} setMessage={setMessage} getWeather={getWeather} handleChange={Handler} isDisabled={isDisabled}/>
     </div>
     </>
   );
